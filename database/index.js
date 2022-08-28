@@ -22,6 +22,8 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
+module.exports.Repo = Repo;
+
 let save = (repos) => {
   // TODO: Your code here
   // This function should save a repo or repos to
@@ -38,7 +40,6 @@ let save = (repos) => {
             forks_count: repo.forks_count,
             username: repo.owner.login
           });
-          console.log(newRepo);
         }
       } else if (typeof repos === 'object') {
         var newRepo = await Repo.create({
@@ -49,7 +50,6 @@ let save = (repos) => {
           forks_count: repos.forks_count,
           username: repos.owner.login
         });
-        console.log(newRepo);
       }
     } catch (err) {
       console.log('Error: ', err);

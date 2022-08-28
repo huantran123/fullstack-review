@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
+import Repo from './components/Repo.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +12,23 @@ class App extends React.Component {
       repos: []
     }
 
+  }
+
+  getRepos () {
+    $.get('/repos')
+      .done((data) => {
+        this.setState({
+          repos: data
+        })
+        console.log(this.state.repos);
+      })
+      .fail(() => {
+        console.log('Cannot get repos!')
+      })
+  }
+
+  componentDidMount() {
+    this.getRepos();
   }
 
   search (term) {
@@ -24,6 +42,9 @@ class App extends React.Component {
       .fail((xhr, status, error) => {
         console.log(`${status} - User not found`);
       })
+
+    // Another way to write
+
     // $.ajax({
     //   url: '/repos',
     //   type: 'POST',
@@ -43,6 +64,9 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <ol>
+        {this.state.repos.map(repo => <li key={repo.repo_id}><Repo repo={repo}/></li>)}
+      </ol>
     </div>)
   }
 }
