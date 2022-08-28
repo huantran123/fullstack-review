@@ -9,7 +9,7 @@ let repoSchema = mongoose.Schema({
   },
   name: String,
   description: String,
-  git_url: {
+  link: {
     type: String,
     unique: true
   },
@@ -34,7 +34,7 @@ let save = (repos) => {
             repo_id: repo.id,
             name: repo.name,
             description: repo.description,
-            git_url: repo.git_url,
+            link: repo.html_url,
             forks_count: repo.forks_count,
             username: repo.owner.login
           });
@@ -45,15 +45,15 @@ let save = (repos) => {
           repo_id: repos.id,
           name: repos.name,
           description: repos.description,
-          git_url: repos.git_url,
+          link: repos.html_url,
           forks_count: repos.forks_count,
           username: repos.owner.login
         });
         console.log(newRepo);
       }
+    } catch (err) {
+      console.log('Error: ', err);
     }
-  } catch (err) {
-    console.log('Error: ', err);
   }
   saveRepos();
 }

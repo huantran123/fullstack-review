@@ -17,7 +17,7 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     // TODO
     // When a user types a GitHub username into the text field, use jQuery's ajax method to send a POST request to /repos
-    $.post('/', {username: term})
+    $.post('/repos', {username: term})
       .done(() => {
         console.log(`${term}'s repos was successfully saved!`);
       })
