@@ -38,6 +38,7 @@ class App extends React.Component {
     $.post('/repos', {username: term})
       .done(() => {
         console.log(`${term}'s repos was successfully saved!`);
+        this.getRepos();
       })
       .fail((xhr, status, error) => {
         console.log(`${status} - User not found`);
