@@ -2,8 +2,10 @@ const express = require('express');
 const helpers = require('../helpers/github');
 const db = require('../database/index');
 let app = express();
+const cool = require('cool-ascii-faces')          // Adding for heroku
 
 app.use(express.static(__dirname + '/../client/dist'));
+app.get('/cool', (req, res) => res.send(cool()));          // Adding for heroku
 
 // middleware
 app.use(express.json());
@@ -33,7 +35,7 @@ app.get('/repos', function (req, res) {
     .limit(25)
     .exec((err, repos) => {
       if (err) {
-        res.send('Cannot query repos');
+        res.status(400).send('Cannot query repos');
       }
       res.status(200).send(repos);
     })

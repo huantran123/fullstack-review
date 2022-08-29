@@ -20,7 +20,7 @@ class App extends React.Component {
         this.setState({
           repos: data
         })
-        console.log(this.state.repos);
+        // console.log(this.state.repos);
       })
       .fail(() => {
         console.log('Cannot get repos!')
@@ -31,33 +31,19 @@ class App extends React.Component {
     this.getRepos();
   }
 
-  search (term) {
+  search (term, cb) {
     console.log(`${term} was searched`);
+    var getRepo
     // TODO
     // When a user types a GitHub username into the text field, use jQuery's ajax method to send a POST request to /repos
     $.post('/repos', {username: term})
-      .done(() => {
+      .done((data) => {
         console.log(`${term}'s repos was successfully saved!`);
         this.getRepos();
       })
       .fail((xhr, status, error) => {
         console.log(`${status} - User not found`);
       })
-
-    // Another way to write
-
-    // $.ajax({
-    //   url: '/repos',
-    //   type: 'POST',
-    //   data: {username: term},
-    //   contentType: 'application/json',
-    //   success: () => {
-    //     console.log(`${term}'s repos was successfully saved!`);
-    //   },
-    //   error: (err) => {
-    //     console.log('Username not found');
-    //   }
-    // });
   }
 
   render () {
