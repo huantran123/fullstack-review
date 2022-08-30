@@ -13,9 +13,8 @@ let repoSchema = mongoose.Schema({
     type: String,
     unique: true
   },
-  // createdAt: { type: Date, default: Date.now },
-  // updatedAt: { type: Date, default: Date.now },
   forks_count: Number,
+  watchers: Number,
   username: String
 });
 // Make sure repos are unique
@@ -26,29 +25,48 @@ module.exports.Repo = Repo;
 
 let save = (repos) => {
   // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
-  if (Array.isArray(repos)) {
+  // This function should save a repo or repos to the MongoDB
+  // Or update the existed repo with new information
+  async function saveRepo() {
     for (var repo of repos) {
-      var newRepo = Repo.create({
-        repo_id: repo.id,
+      var filter = {
+        repo_id: repo.id
+      }
+      var newRepo = {
         name: repo.name,
         description: repo.description,
         link: repo.html_url,
         forks_count: repo.forks_count,
+        watchers: repo.watchers,
         username: repo.owner.login
-      });
+      }
+      var options = {
+        new: true,
+        upsert: true
+      }
+      await Repo.findOneAndUpdate(filter, newRepo, options);
     }
-  } else if (typeof repos === 'object') {
-    var newRepo = Repo.create({
-      repo_id: repos.id,
-      name: repos.name,
-      description: repos.description,
-      link: repos.html_url,
-      forks_count: repos.forks_count,
-      username: repos.owner.login
-    });
   }
+  return saveRepo();
 }
 
 module.exports.save = save;
+
+
+// let save = (repos) => {
+//   // TODO: Your code here
+//   // This function should save a repo or repos to
+//   // the MongoDB
+//   for (var repo of repos) {
+//     var newRepo = {
+//       repo_id: repo.id,
+//       name: repo.name,
+//       description: repo.description,
+//       link: repo.html_url,
+//       forks_count: repo.forks_count,
+//       watchers: repo.watchers,
+//       username: repo.owner.login
+//     }
+//     Repo.create(newRepo);
+//   }
+// }

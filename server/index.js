@@ -16,15 +16,27 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  helpers.getReposByUsername(req.body.username, (err, data) => {
-    if (err) {
-      res.status(404).send('User not found!')
-    } else {
-      db.save(data);
-      res.status(201).send('Repos are successfuly saved!');
-    }
 
-  })
+  // helpers.getReposByUsername(req.body.username, (err, data) => {
+  //   if (err) {
+  //     res.status(404).send('User not found!')
+  //   } else {
+  //     db.save(data);
+  //     res.status(201).send('Repos are successfuly saved!');
+  //   }
+
+  // })
+
+  helpers.getReposByUsername(req.body.username)
+    .then((data) => {
+      return db.save(data);
+    })
+    .then(() => {
+      res.status(201).send('Repos are successfuly saved!');
+    })
+    .catch(() => {
+      res.status(404).send('User not found!')
+    })
 });
 
 app.get('/repos', function (req, res) {

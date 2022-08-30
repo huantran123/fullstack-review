@@ -9,6 +9,7 @@ const Repo = (props) => (
       <li key='username'>Owner: {props.repo.username}</li>
       <li key='description'>Description: {props.repo.description}</li>
       <li key='forks'>Forks: {props.repo.forks_count}</li>
+      <li key='watchers'>Watchers: {props.repo.watchers}</li>
     </ul>
   </div>
 )

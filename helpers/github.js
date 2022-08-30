@@ -1,7 +1,7 @@
 const axios = require('axios');
 const config = require('../config.js');
 
-let getReposByUsername = (username, cb) => {
+let getReposByUsername = (username) => {
   // TODO - Use the axios module to request repos for a specific
   // user from the github API
 
@@ -15,16 +15,19 @@ let getReposByUsername = (username, cb) => {
     }
   };
 
-  axios({
+  return axios({
     method: 'get',
     url: options.url,
     headers: options.headers
   })
   .then((res) => {
-    cb(null, res.data)
+    // cb(null, res.data)
+    console.log(res.data)
+    return res.data;
   })
   .catch((err) => {
-    cb(err, null);
+    // cb(err, null);
+    return err;
   })
 
 

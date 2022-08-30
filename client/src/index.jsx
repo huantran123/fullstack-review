@@ -33,7 +33,6 @@ class App extends React.Component {
 
   search (term, cb) {
     console.log(`${term} was searched`);
-    var getRepo
     // TODO
     // When a user types a GitHub username into the text field, use jQuery's ajax method to send a POST request to /repos
     $.post('/repos', {username: term})
@@ -51,6 +50,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <h2>Top 25 Repos</h2>
       <ol>
         {this.state.repos.map(repo => <li key={repo.repo_id}><Repo repo={repo}/></li>)}
       </ol>
