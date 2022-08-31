@@ -26,7 +26,7 @@ module.exports.Repo = Repo;
 let save = (repos) => {
   // TODO: Your code here
   // This function should save a repo or repos to the MongoDB
-  // Or update the existed repo with new information
+  // Or update the existed repos with new information
   async function saveRepo() {
     for (var repo of repos) {
       var filter = {
@@ -44,6 +44,10 @@ let save = (repos) => {
         new: true,
         upsert: true
       }
+
+      // Find the repo that match the filer
+      // If that repo already exists, update that repo with new values in newRepo
+      // If that repo doesn not exists, do the upsert to combine filter and newRepo to make a new repo and add to the db
       await Repo.findOneAndUpdate(filter, newRepo, options);
     }
   }

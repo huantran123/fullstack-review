@@ -22,7 +22,6 @@ let getReposByUsername = (username) => {
   })
   .then((res) => {
     // cb(null, res.data)
-    console.log(res.data)
     return res.data;
   })
   .catch((err) => {

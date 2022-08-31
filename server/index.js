@@ -24,12 +24,11 @@ app.post('/repos', function (req, res) {
   //     db.save(data);
   //     res.status(201).send('Repos are successfuly saved!');
   //   }
-
   // })
 
   helpers.getReposByUsername(req.body.username)
-    .then((data) => {
-      return db.save(data);
+    .then((repos) => {
+      return db.save(repos);
     })
     .then(() => {
       res.status(201).send('Repos are successfuly saved!');
