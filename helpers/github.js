@@ -1,5 +1,6 @@
 const axios = require('axios');
 const config = require('../config.js');
+require('dotenv').config();     // This one allows to use process.env.TOKEN
 
 let getReposByUsername = (username) => {
   // TODO - Use the axios module to request repos for a specific
